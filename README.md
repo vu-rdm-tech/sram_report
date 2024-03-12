@@ -3,7 +3,7 @@
 - Provide SRAM invitation and membership status information for https://github.com/vu-rdm-tech/adminyoda
 
 ## Usage
-Rename `config.template.py` to `config.py` and set an SRAM organization API key and the an absolute path as `DATA_DIR`
+Rename `config.template.py` to `config.py` and set an SRAM organization API key and an absolute path to the `data` directory as `DATA_DIR`.
 
 Add `<path to python>/python <path to script>/sram_tasks.py` to you crontab. You can schedule the script to run multiple times a day. The script produces output with a weeknumber in the name. If output is already present data collection is skipped, so you will end up with weekly output.
 
