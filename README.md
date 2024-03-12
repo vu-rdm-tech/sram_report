@@ -8,7 +8,9 @@ Rename `config.template.py` to `config.py` and set an SRAM organization API key 
 Add `<path to python>/python <path to script>/sram_tasks.py` to you crontab. You can schedule the script to run multiple times a day. The script produces output with a weeknumber in the name. If output is already present data collection is skipped, so you will end up with weekly output.
 
 ## Ouput
-1. `data/202410-sram_organisation.json` output of `/api/organisations/v1`.
-2. `data/202410-sram_members.json` membership and open invitation count per user email address.
-3. `data/202410-sram_collaboration_membercount.json` membership and open invitation count per CO.
-4. `data/202410-sram_report.xlsx` 2 and 3 in excel format.
+1. `data/{year}{week}-sram_organisation.json` output of `/api/organisations/v1`.
+2. `data/{year}{week}-sram_members.json` membership and open invitation count per user email address.
+3. `data/{year}{week}-sram_collaboration_membercount.json` membership and open invitation count per CO.
+4. `data/{year}{week}-sram_report.xlsx` 2 and 3 in excel format.
+
+`data/log/sram-tasks_{year}{month}.log`, some basic logging.
