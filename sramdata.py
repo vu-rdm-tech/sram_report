@@ -8,8 +8,8 @@ import time
 from datetime import datetime, timedelta
 
 logger = logging.getLogger('sram_tasks')
-# cache for 8 hours
-session = CachedSession(cache_name="sram_requests_cache", allowable_methods=("GET", "POST"), expire_after=timedelta(days=6))
+# cache for 8 hours for easier testing
+session = CachedSession(cache_name="sram_requests_cache", allowable_methods=("GET", "POST"), expire_after=timedelta(hours=8))
 
 def handle_exception():
     logger.warning('script failed with an error')
