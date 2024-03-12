@@ -24,7 +24,7 @@ def _store(filename, data):
         json.dump(data, f, indent=1)
 
 def setup_logging():
-    LOGFILE = f'{DATA_DIR}log/sram-tasks_{today.year}{today.strftime("%m")}.log'
+    LOGFILE = f'{DATA_DIR}/log/sram-tasks_{today.year}{today.strftime("%m")}.log'
     logger = logging.getLogger('sram_tasks')
     hdlr = logging.FileHandler(LOGFILE)
     formatter = logging.Formatter('%(asctime)s %(levelname)s %(message)s')
