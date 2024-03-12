@@ -37,7 +37,6 @@ class SramData():
         if session.cache.contains(url=url):
             cached = True
         else: 
-            print(url)
             time.sleep(5) # sleep for 1 second to avoid rate limiting
         if res.status_code == 200:
             return res, cached
@@ -118,7 +117,6 @@ class SramData():
             self.collaborations[co["identifier"]]["membership_count"] = co["collaboration_memberships_count"]
             invitation_count = 0	
             for invitation in self.invitations[co["identifier"]]:
-                print(invitation)
                 if invitation["status"] == "open":
                     invitation_count += 1
             self.collaborations[co["identifier"]]["invitation_count"] = invitation_count
