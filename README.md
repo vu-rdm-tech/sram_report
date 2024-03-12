@@ -5,7 +5,7 @@
 ## Usage
 Rename `config.template.py` to `config.py` and set an SRAM organization API key and the an absolute path as `DATA_DIR`
 
-Add `<path to python>/python <path to script>` to you crontab. You can schedule the script to run multiple times a day. The script produces output with a weeknumber in the name. If output is already present data collection is skipped, so you will end up with weekly output.
+Add `<path to python>/python <path to script>/sram_tasks.py` to you crontab. You can schedule the script to run multiple times a day. The script produces output with a weeknumber in the name. If output is already present data collection is skipped, so you will end up with weekly output.
 
 ## Ouput
 1. `data/202410-sram_organisation.json` output of `/api/organisations/v1`.
