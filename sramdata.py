@@ -19,6 +19,7 @@ class SramData():
     def __init__(self):
         self.orgdata = {}
         self.users = {}
+        self.collaborations = {}
     
     def _store(self, filename, data):
         """
@@ -34,14 +35,12 @@ class SramData():
     def _do_sram_getrequest(self, url):
         headers = {"Authorization": f"Bearer {SRAM_API_KEY}", "Accept": "application/json"}
         res = session.get(url, headers=headers)
-        if session.cache.contains(url=url):
-            cached = True
-        else: 
+        if not session.cache.contains(url=url):
             time.sleep(5) # sleep for 1 second to avoid rate limiting
         if res.status_code == 200:
-            return res, cached
+            return res
         else:
-            return False, False
+            return False
             #raise Exception("*** Got: status_code: %s" % res.status_code)
     
     def get_sram_organization(self):
@@ -91,19 +90,19 @@ class SramData():
     
     def collect(self):
         self.orgdata = self.get_sram_organization()
-        self.invitations = self.get_sram_open_invitations()
-        self.details = self.get_sram_details()
+        invitations = self.get_sram_open_invitations()
+        details = self.get_sram_details()
         
         self.users = {}
         # per email address get invitations and memberships counts
-        for co_id, data in self.invitations.items():
+        for co_id, data in invitations.items():
             for invitation in data:
                 email = invitation["invitation"]["email"]
                 if email not in self.users:
                     self.users[email] = {"invitations": 0, "memberships": 0}
                 self.users[email]["invitations"] += 1
 
-        for co_id, data in self.details.items():
+        for co_id, data in details.items():
             for member in data["collaboration_memberships"]:
                 email = member["user"]["email"]
                 if email not in self.users:
@@ -116,7 +115,7 @@ class SramData():
             self.collaborations[co["identifier"]]["name"] = co["name"]
             self.collaborations[co["identifier"]]["membership_count"] = co["collaboration_memberships_count"]
             invitation_count = 0	
-            for invitation in self.invitations[co["identifier"]]:
+            for invitation in invitations[co["identifier"]]:
                 if invitation["status"] == "open":
                     invitation_count += 1
             self.collaborations[co["identifier"]]["invitation_count"] = invitation_count
