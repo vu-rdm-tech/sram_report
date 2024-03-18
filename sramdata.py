@@ -44,37 +44,37 @@ class SramData():
             #raise Exception("*** Got: status_code: %s" % res.status_code)
     
     def get_sram_organization(self):
-        res, cached = self._do_sram_getrequest(f"{SRAM_API_ROOT}/api/organisations/v1")
+        res = self._do_sram_getrequest(f"{SRAM_API_ROOT}/api/organisations/v1")
         data = json.loads(res.content)
         return data
     
     def get_invitation(self, co_identifier):
-        res, cached = self._do_sram_getrequest(
+        res = self._do_sram_getrequest(
             f"{SRAM_API_ROOT}/api/invitations/v1/invitations/{co_identifier}"
         )
         try:    
             data = json.loads(res.content)
             
         except:
-            return None, cached
-        return data, cached
+            return None
+        return data
     
     def get_co_details(self, co_identifier):
-        res, cached = self._do_sram_getrequest(
+        res = self._do_sram_getrequest(
             f"{SRAM_API_ROOT}/api/collaborations/v1/{co_identifier}"
         )
         try:
             data = json.loads(res.content)
         except:
-            return None, cached
-        return data, cached
+            return None
+        return data
             
     
     def get_sram_open_invitations(self):
         invitations = {}
         for co in self.orgdata["collaborations"]:
             
-            data, cached = self.get_invitation(co["identifier"])
+            data = self.get_invitation(co["identifier"])
             if data is not None:
                 invitations[co["identifier"]] = data
                 self._store(filename=f'{DATA_DIR}/dump/{co["identifier"]}_invitations.json', data=data)
@@ -83,7 +83,7 @@ class SramData():
     def get_sram_details(self):
         details = {}
         for co in self.orgdata["collaborations"]:
-            data, cached = self.get_co_details(co["identifier"])
+            data = self.get_co_details(co["identifier"])
             details[co["identifier"]] = data
             self._store(filename=f'{DATA_DIR}/dump/{co["identifier"]}_details.json', data=data)
         return details
