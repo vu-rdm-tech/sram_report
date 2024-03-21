@@ -97,10 +97,11 @@ class SramData():
         # per email address get invitations and memberships counts
         for co_id, data in invitations.items():
             for invitation in data:
-                email = invitation["invitation"]["email"]
-                if email not in self.users:
-                    self.users[email] = {"invitations": 0, "memberships": 0}
-                self.users[email]["invitations"] += 1
+                if invitation["status"] == "open":
+                    email = invitation["invitation"]["email"]
+                    if email not in self.users:
+                        self.users[email] = {"invitations": 0, "memberships": 0}
+                    self.users[email]["invitations"] += 1
 
         for co_id, data in details.items():
             for member in data["collaboration_memberships"]:
