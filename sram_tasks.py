@@ -37,7 +37,7 @@ def setup_logging():
 def collect():
     sramdata = SramData()
     logger.info(f'start script {os.path.realpath(__file__)}')
-    report_filename = f'{DATA_DIR}/{year}{week}-sram_report.xlsx'
+    report_filename = f'{DATA_DIR}/data/{year}{week}-sram_report.xlsx'
     
     if os.path.exists(report_filename):
         logger.info(f"Report already exists: {report_filename}")
@@ -46,9 +46,9 @@ def collect():
     
         sramdata.logger = logger
         sramdata.collect()
-        _store(data=sramdata.orgdata, filename=f"{DATA_DIR}/{year}{week}-sram_organisation.json")
-        _store(data=sramdata.users, filename=f"{DATA_DIR}/{year}{week}-sram_members.json")    
-        _store(data=sramdata.collaborations, filename=f"{DATA_DIR}/{year}{week}-sram_collaboration_membercount.json")
+        _store(data=sramdata.orgdata, filename=f"{DATA_DIR}/data/{year}{week}-sram_organisation.json")
+        _store(data=sramdata.users, filename=f"{DATA_DIR}/data/{year}{week}-sram_members.json")    
+        _store(data=sramdata.collaborations, filename=f"{DATA_DIR}/data/{year}{week}-sram_collaboration_membercount.json")
 
         logger.info(f"Creating report: {report_filename}")
         writer = pd.ExcelWriter(report_filename, engine="xlsxwriter")
