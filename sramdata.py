@@ -77,7 +77,7 @@ class SramData():
             data = self.get_invitation(co["identifier"])
             if data is not None:
                 invitations[co["identifier"]] = data
-                self._store(filename=f'{DATA_DIR}/dump/{co["identifier"]}_invitations.json', data=data)
+                self._store(filename=f'{DATA_DIR}/data/dump/{co["identifier"]}_invitations.json', data=data)
         return invitations
     
     def get_sram_details(self):
@@ -85,7 +85,7 @@ class SramData():
         for co in self.orgdata["collaborations"]:
             data = self.get_co_details(co["identifier"])
             details[co["identifier"]] = data
-            self._store(filename=f'{DATA_DIR}/dump/{co["identifier"]}_details.json', data=data)
+            self._store(filename=f'{DATA_DIR}/data/dump/{co["identifier"]}_details.json', data=data)
         return details
     
     def collect(self):
@@ -97,10 +97,11 @@ class SramData():
         # per email address get invitations and memberships counts
         for co_id, data in invitations.items():
             for invitation in data:
-                email = invitation["invitation"]["email"]
-                if email not in self.users:
-                    self.users[email] = {"invitations": 0, "memberships": 0}
-                self.users[email]["invitations"] += 1
+                if invitation["status"] == "open":
+                    email = invitation["invitation"]["email"]
+                    if email not in self.users:
+                        self.users[email] = {"invitations": 0, "memberships": 0}
+                    self.users[email]["invitations"] += 1
 
         for co_id, data in details.items():
             for member in data["collaboration_memberships"]:
